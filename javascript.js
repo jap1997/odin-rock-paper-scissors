@@ -5,51 +5,59 @@ function getComputerChoice() {
     return "scissors"
 }
 
-function getHumanChoice() {
-    const choice = prompt("Please enter your move (rock, paper or scissors):")
-    return choice
+let humanScore = 0
+let computerScore = 0
+
+function playRound(humanChoice, computerChoice) {
+    const humanChoiceLowerCase = humanChoice.toLowerCase()
+    const currentHumanScore = humanScore
+    const currentComputerScore = computerScore
+    const resultDiv = document.querySelector(".result")
+    const scoreDiv = document.querySelector(".score")
+    if (computerScore == 5 || humanScore == 5) {
+        humanScore = 0
+        computerScore = 0
+    }
+    resultDiv.textContent = ''
+    scoreDiv.textContent = ''
+    switch (humanChoiceLowerCase) {
+        case "rock":
+            if (computerChoice == "scissors") humanScore += 1
+            if (computerChoice == "paper") computerScore += 1
+            break
+        case "paper":
+            if (computerChoice == "scissors") computerScore += 1
+            if (computerChoice == "rock") humanScore += 1
+            break
+        case "scissors":
+            if (computerChoice == "rock") computerScore += 1
+            if (computerChoice == "paper") humanScore += 1
+            break
+    }
+    if (currentComputerScore < computerScore) {
+        resultDiv.textContent = `You lose! ${computerChoice.charAt(0).toUpperCase() + computerChoice.slice(1)} beats ${humanChoice.charAt(0).toUpperCase() + humanChoice.slice(1)}`
+    } else if (currentHumanScore < humanScore) {
+        resultDiv.textContent = `You win! ${humanChoice.charAt(0).toUpperCase() + humanChoice.slice(1)} beats ${computerChoice.charAt(0).toUpperCase() + computerChoice.slice(1)}`
+    } else {
+        resultDiv.textContent = 'It\'s a tie.'
+    }
+    scoreDiv.textContent = `Current score: Computer ${computerScore}, You ${humanScore}`
+
+    if (humanScore == 5) {
+        resultDiv.textContent = "You win, congratulations!"
+    } else if (computerScore == 5) {
+        resultDiv.textContent = "Computer wins, try again."
+    }
 }
-
-
 
 function playGame() {
-    let humanScore = 0
-    let computerScore = 0
-
-    function playRound(humanChoice, computerChoice) {
-        const humanChoiceLowerCase = humanChoice.toLowerCase()
-        const currentHumanScore = humanScore
-        const currentComputerScore = computerScore
-        switch (humanChoiceLowerCase) {
-            case "rock":
-                if (computerChoice == "scissors") humanScore += 1
-                if (computerChoice == "paper") computerScore += 1
-                break
-            case "paper":
-                if (computerChoice == "scissors") computerScore += 1
-                if (computerChoice == "rock") humanScore += 1
-                break
-            case "scissors":
-                if (computerChoice == "rock") computerScore += 1
-                if (computerChoice == "paper") humanScore += 1
-                break
-        }
-        if (currentComputerScore < computerScore) {
-            console.log(`You lose! ${computerChoice.charAt(0).toUpperCase() + computerChoice.slice(1)} beats ${humanChoice.charAt(0).toUpperCase() + humanChoice.slice(1)}`)
-        } else if (currentHumanScore < humanScore) {
-            console.log(`You win! ${humanChoice.charAt(0).toUpperCase() + humanChoice.slice(1)} beats ${computerChoice.charAt(0).toUpperCase() + computerChoice.slice(1)}`)
-        } else {
-            console.log("It's a tie.")
-        }
-    }
-
-    for (let i = 0; i < 5; i++) {
-        playRound(getHumanChoice(), getComputerChoice())
-    }
-
-    if (humanScore > computerScore) console.log("You win!")
-    else if (humanScore < computerScore) console.log("Computer wins!")
-    else console.log("It's a tie!")
+    playRound(getHumanChoice(), getComputerChoice())
 }
 
-playGame()
+const buttons = document.querySelectorAll("button")
+
+buttons.forEach((button) => {
+    button.addEventListener("click", () => {
+        playRound(button.className, getComputerChoice())
+    });
+});

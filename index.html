@@ -3,8 +3,38 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Rock Paper Scissor</title>
+  <style>
+    p {
+      font-weight: bold;
+    }
+    body {
+      text-align: center;
+    }
+    .rock {
+      background-color: brown;
+    }
+    .paper {
+      background-color: beige;
+    }
+    .scissors {
+      background-color: #848789;
+    }
+    button {
+      font-size: 16px;
+      border-radius: 6px;
+      margin: 5px;
+      padding: 8px;
+    }
+  </style>
 </head>
 <body>
+    <h1>Odin Rock Paper Scissor</h1>
+    <h3>Play Game:</h3>
+    <button class="rock">rock</button>
+    <button class="paper">paper</button>
+    <button class="scissors">scissors</button><br /><br />
+    <p>Result: </p><div class="result"></div>
+    <p>Score: </p><div class="score"></div>
     <script src="javascript.js"></script>
 </body>
 </html>
